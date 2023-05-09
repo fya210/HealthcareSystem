@@ -26,7 +26,7 @@ function ButtonGroup(props) {
 
 function DefaultButtonGroup(props) {
     const defaultButtons = [];
-    if (props.status === "Accepted" || (props.status === "Done" && props.paymentBalance !== 0)) {
+    if (props.status === "Accepted" || (props.status === "Done")) {
         defaultButtons.push(
             { 
                 title:"Delete", icon:"delete_outline", disabled: true,
@@ -98,7 +98,6 @@ export default function ManageBar(props) {
                 <DropdownMenuDivider />
                 <DefaultButtonGroup
                     status={props.appointment.status}
-                    paymentBalance={props.appointment.paymentBalance}
                     handleDelete={props.handleDelete}
                 />
             </DropdownMenu>

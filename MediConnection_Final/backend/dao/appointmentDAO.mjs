@@ -3,29 +3,7 @@ import { ObjectId } from "mongodb";
 import appointmentSchema from "../schema/appointmentSchema.mjs";
 
 export default class AppointmentDAO {
-  // static users
-  // static appointments
-  // static chats
 
-  // static async injectDB(conn) {
-  //   if (this.users && appointmentSchema && this.chats) {
-  //     return
-  //   }
-
-  //   try {
-  //     this.users = await conn.db(process.env.DB_NS).collection("users", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //     appointmentSchema = await conn.db(process.env.DB_NS).collection("appointments", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //     this.chats = await conn.db(process.env.DB_NS).collection("chats", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in AppointmentDAO: ${err}`)
-  //   }
-  // }
 
   static async getAppointments({ filter = null, page = 0, limit = 10 } = {}) {
     try {
@@ -98,7 +76,6 @@ export default class AppointmentDAO {
     description,
     serviceName,
     serviceCharge,
-    paymentBalance,
   }) {
     try {
       const response = await appointmentSchema.create({
@@ -111,7 +88,6 @@ export default class AppointmentDAO {
         description: description,
         serviceName: serviceName,
         serviceCharge: serviceCharge,
-        paymentBalance: paymentBalance,
       });
       console.log("Came back from DB.");
       return { success: true, id: response._id };

@@ -9,7 +9,6 @@ const initialState = (presistedSession !== undefined) ? presistedSession: {
     firstName: "",
     lastName: "",
     isPhysician: false,
-    profilePhotoId: null
 }
 
 
@@ -35,7 +34,6 @@ export const sessionSlice = createSlice({
             state.firstName = "";
             state.lastName = "";
             state.isPhysician = false;
-            state.profilePhotoId = null;
         }
     }
 });

@@ -2,21 +2,6 @@ import { ObjectId } from "mongodb";
 import serviceSchema from "../schema/serviceSchema.mjs";
 
 export default class ServiceDAO {
-  // static services
-
-  // static async injectDB(conn) {
-  //   if (serviceSchema) {
-  //     return
-  //   }
-
-  //   try {
-  //     serviceSchema = await conn.db(process.env.DB_NS).collection("services", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in ServiceDAO: ${err}`)
-  //   }
-  // }
 
   static async getServices({ filter = {}, page = 0, limit = 10 }) {
     try {

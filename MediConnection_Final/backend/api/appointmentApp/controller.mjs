@@ -12,9 +12,7 @@ import {
   Appointment,
   Service,
   Note,
-  Payment,
   Medication,
-  LabReport,
 } from "../models.mjs";
 
 import UserDAO from "../../dao/userDAO.mjs";
@@ -22,10 +20,7 @@ import AppointmentDAO from "../../dao/appointmentDAO.mjs";
 import ServiceDAO from "../../dao/serviceDAO.mjs";
 import ChatDAO from "../../dao/chatDAO.mjs";
 import NoteDAO from "../../dao/noteDAO.mjs";
-import PaymentDAO from "../../dao/paymentDAO.mjs";
 import MedicationDAO from "../../dao/medicationDAO.mjs";
-import LabReportDAO from "../../dao/labReportDAO.mjs";
-
 import { ChatApi } from "../chatApp/chatController.mjs";
 
 // This class defines all APIs that are not directly called by Appointment router.
@@ -239,7 +234,6 @@ export default class AppointmentController {
           description: appointmentInfo.description,
           serviceName: service.name,
           serviceCharge: service.rate,
-          paymentBalance: service.rate,
         });
 
         if (!appointmentResponse.success) {
@@ -355,11 +349,6 @@ export default class AppointmentController {
       const page = req.query.page ? parseInt(req.query.page, 10) : 0;
       const limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
 
-      // const appointment = await AppointmentDAO.getAppointment(appointmentId);
-      // if (!appointment || (appointment && !Object.keys(appointment).length)) {
-      //   throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      // }
-
       const filter = {
         appointmentId: appointmentId,
       };
@@ -431,128 +420,6 @@ export default class AppointmentController {
     }
   }
 
-  static async getPayments(req, res, next) {
-    try {
-      const appointmentId = req.params.appointmentId;
-      const page = req.query.page ? parseInt(req.query.page, 10) : 0;
-      const limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
-
-      const appointment = await AppointmentDAO.getAppointment(appointmentId);
-      if (!appointment || (appointment && !Object.keys(appointment).length)) {
-        throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      }
-
-      const filter = {
-        appointmentId: new ObjectId(appointment._id),
-      };
-
-      const payments = await PaymentDAO.getPayments({
-        filter: filter,
-        page: page,
-        limit: limit,
-        reverse: true,
-      });
-      res.json(
-        payments.map((item) => {
-          const payment = new Payment(item);
-          return payment;
-        })
-      );
-    } catch (err) {
-      console.error(`Failed to get payments. ${err}`);
-      res.status(err.statusCode).json({ message: err.message });
-    }
-  }
-
-  static async addPayment(req, res, next) {
-    try {
-      const paymentInfo = req.body;
-      if (!paymentInfo || (paymentInfo && !Object.keys(paymentInfo).length)) {
-        throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      }
-
-      const appointmentId = req.params.appointmentId;
-      const appointment = await AppointmentDAO.getAppointment(appointmentId);
-      if (!appointment || (appointment && !Object.keys(appointment).length)) {
-        throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      }
-
-      const amountAsNumber = Number(paymentInfo.amount);
-      if (amountAsNumber === isNaN || amountAsNumber < 0) {
-        throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      }
-
-      if (amountAsNumber > appointment.paymentBalance) {
-        throw new HttpBadRequestError(
-          "Invalid request. Payment amount cannot be greater than balance."
-        );
-      }
-
-      const addResponse = await PaymentDAO.addPayment({
-        fromUsername: paymentInfo.fromUsername,
-        toUsername: paymentInfo.toUsername,
-        appointmentId: new ObjectId(appointment._id),
-        amount: amountAsNumber,
-        date: new Date(paymentInfo.date),
-      });
-      if (!addResponse.success) {
-        throw new Error(addResponse.error);
-      }
-
-      const updateResponse = await AppointmentDAO.updateAppointment(
-        appointmentId,
-        {
-          paymentBalance: appointment.paymentBalance - amountAsNumber,
-        }
-      );
-      if (!updateResponse.success) {
-        throw new Error(updateResponse.error);
-      }
-
-      res.status(200).json({ success: true, id: addResponse.id });
-    } catch (err) {
-      console.error(`Failed to add a new payment. ${err}`);
-      res.status(err.statusCode).json({ message: err.message });
-    }
-  }
-
-  static async deletePayment(req, res, next) {
-    try {
-      const appointmentId = req.params.appointmentId;
-      const appointment = await AppointmentDAO.getAppointment(appointmentId);
-      if (!appointment || (appointment && !Object.keys(appointment).length)) {
-        throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      }
-
-      const paymentId = req.params.id;
-      const payment = await PaymentDAO.getPayment(paymentId);
-      if (!payment || (payment && !Object.keys(payment).length)) {
-        throw new HttpBadRequestError("Invalid request. Bad input parameters.");
-      }
-
-      const deleteResponse = await PaymentDAO.deletePayment(paymentId);
-      if (!deleteResponse.success) {
-        throw new Error(deleteResponse.error);
-      }
-
-      if (deleteResponse.deletedCount > 0) {
-        const updateResponse = await AppointmentDAO.updateAppointment(
-          appointmentId,
-          {
-            paymentBalance: appointment.paymentBalance + payment.amount,
-          }
-        );
-        if (!updateResponse.success) {
-          throw new Error(updateResponse.error);
-        }
-      }
-
-      res.json({ success: true });
-    } catch (err) {
-      console.error(`Failed to delete payment. ${err}`);
-      res.status(err.statusCode).json({ message: err.message });
-    }
-  }
 
   static async getMedications(req, res, next) {
     try {
@@ -561,12 +428,6 @@ export default class AppointmentController {
       const page = req.query.page ? parseInt(req.query.page, 10) : 0;
       const limit = req.query.limit ? parseInt(req.query.limit, 10) : 10;
       console.log("input", req.params);
-
-      // const appointment = await AppointmentDAO.getAppointment(appointmentId)
-      // console.log("get app", appointment)
-      // if (!appointment || (appointment && !Object.keys(appointment).length)) {
-      //   throw new HttpBadRequestError("Invalid request. Bad input parameters.")
-      // }
 
       const filter = {
         appointmentId: appointmentId,

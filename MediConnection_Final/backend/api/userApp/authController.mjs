@@ -37,7 +37,6 @@ export default class AuthController {
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         isPhysician: userInfo.isPhysician,
-        profilePhotoId: null,
         dob: new Date(userInfo.dob),
         gender: userInfo.gender,
         qualification: userInfo.qualification,

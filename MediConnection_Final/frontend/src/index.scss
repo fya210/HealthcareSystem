@@ -139,33 +139,6 @@ form {
   color: $foreground-2;
 }
 
-
-// Profile picture styles
-.md-pfl-pic {
-	object-fit: cover;
-	border-radius: 0.5rem!important;
-
-	&.md-pfl-bg {
-		width: 170px!important;
-		height: 170px!important;
-	}
-
-	&.md-pfl-sm {
-		width: 50px!important;
-		height: 50px!important;
-	}
-
-	&.md-pfl-xs {
-		width: 36px!important;
-		height: 36px!important;
-	}
-
-	&.md-pfl-round {
-		border-radius: 50%!important;
-	}
-}
-
-
 // List styles
 .md-list {
   .list-group-item {

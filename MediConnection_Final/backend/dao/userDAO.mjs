@@ -5,23 +5,7 @@ export default class UserDAO {
   static users;
   static gfs;
 
-  // static async injectDB(conn) {
-  //   if (userSchema && this.gfs) {
-  //     return
-  //   }
 
-  //   try {
-  //     userSchema = await conn.db(process.env.DB_NS).collection("users", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //     this.gfs = new GridFSBucket(conn.db(process.env.DB_NS), {
-  //       bucketName: "photos",
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in UserDAO: ${err}`)
-  //   }
-  // }
 
   static async getUsers({ filter = {}, page = 0, limit = 10 }) {
     try {
@@ -85,7 +69,6 @@ export default class UserDAO {
     firstName,
     lastName,
     isPhysician,
-    profilePhotoId,
     dob,
     gender,
     qualification = "",
@@ -99,7 +82,6 @@ export default class UserDAO {
         firstName: firstName,
         lastName: lastName,
         isPhysician: Boolean(isPhysician),
-        profilePhotoId: profilePhotoId ? new ObjectId(profilePhotoId) : null,
         dob: new Date(dob),
         gender: gender,
         emailId: "",
@@ -143,33 +125,6 @@ export default class UserDAO {
       return { success: true };
     } catch (err) {
       console.error(`Failed to update user in DB. ${err}`);
-      return { error: err };
-    }
-  }
-
-  static async getPhoto(photoId) {
-    try {
-      const cursor = await this.gfs.find({ _id: new ObjectId(photoId) });
-      const files = cursor;
-
-      if (!files || files.length === 0) {
-        return null;
-      }
-
-      return await this.gfs.openDownloadStream(new ObjectId(photoId));
-    } catch (err) {
-      // console.error(`Failed to get photo from DB. ${err}`);
-      return null;
-    }
-  }
-
-  static async deletePhoto(photoId) {
-    try {
-      await this.gfs.delete(new ObjectId(photoId));
-
-      return { success: true };
-    } catch (err) {
-      console.error(`Failed to delete photo from DB. ${err}`);
       return { error: err };
     }
   }

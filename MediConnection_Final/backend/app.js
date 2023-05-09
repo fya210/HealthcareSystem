@@ -43,13 +43,7 @@ app.use(
     },
   })
 ); // Adds extra security
-
-// Custom Middleware
-// app.use(notFound)
 app.use(errorHandler);
-// app.use("/static", express.static(__dirname + "/../build/static"));
-// app.use("/public", express.static(__dirname + "/../build/"));
-
 app.use("/api", AppRouter);
 
 // Basic Routing

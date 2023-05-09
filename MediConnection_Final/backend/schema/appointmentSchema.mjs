@@ -17,9 +17,6 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     required: true
   },
-  profilePhotoId: {
-    type: mongoose.Schema.Types.ObjectId,
-  }
 });
 
 const appointmentSchema = new mongoose.Schema({
@@ -63,9 +60,6 @@ const appointmentSchema = new mongoose.Schema({
   serviceCharge: {
     type: "String", 
   },
-  paymentBalance: {
-    type: "String", 
-  }
 });
 
 export default mongoose.model("Appointment", appointmentSchema);
