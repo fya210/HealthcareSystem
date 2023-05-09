@@ -144,12 +144,6 @@ function ViewSection(props) {
         </InfoBody>
       </InfoRow>
       <InfoRow>
-        <InfoTitle>Payment Balance</InfoTitle>
-        <InfoBody>
-          <Currency value={props.appointment.paymentBalance} />
-        </InfoBody>
-      </InfoRow>
-      <InfoRow>
         <InfoTitle>Description</InfoTitle>
         <InfoBody>{props.appointment.description}</InfoBody>
       </InfoRow>

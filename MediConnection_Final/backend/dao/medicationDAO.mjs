@@ -2,21 +2,7 @@ import { ObjectId } from "mongodb";
 import medication from "../schema/medication.mjs";
 
 export default class MedicationDAO {
-  // static medications
 
-  // static async injectDB(conn) {
-  //   if (medication) {
-  //     return
-  //   }
-
-  //   try {
-  //     medication = await conn.db(process.env.DB_NS).collection("medications", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in MedicationDAO: ${err}`)
-  //   }
-  // }
 
   static async getMedications({
     filter = {},

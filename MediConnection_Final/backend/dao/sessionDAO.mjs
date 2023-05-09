@@ -1,21 +1,7 @@
 import sessionSchema from "../schema/sessionSchema.mjs";
 
 export default class SessionDAO {
-  // static sessions
 
-  // static async injectDB(conn) {
-  //   if (sessionSchema) {
-  //     return
-  //   }
-
-  //   try {
-  //     sessionSchema = await conn.db(process.env.DB_NS).collection("sessions", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in SessionDAO: ${err}`)
-  //   }
-  // }
 
   static async getSession(id) {
     try {

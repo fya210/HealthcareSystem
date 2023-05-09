@@ -2,25 +2,6 @@ import { ObjectId } from "mongodb";
 import messageSchema from "../schema/messageSchema.mjs";
 
 export default class MessageDAO {
-  // static chats
-  // static messages
-
-  // static async injectDB(conn) {
-  //   if (this.chats && messageSchema) {
-  //     return
-  //   }
-
-  //   try {
-  //     this.chats = await conn.db(process.env.DB_NS).collection("chats", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //     messageSchema = await conn.db(process.env.DB_NS).collection("messages", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in MessageDAO: ${err}`)
-  //   }
-  // }
 
   static async getMessages({ filter = {}, page = 0, limit = 10 } = {}) {
     try {

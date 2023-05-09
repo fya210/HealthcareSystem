@@ -103,12 +103,7 @@ export default function Appointment(props) {
     }
   }
 
-  async function updatePaymentBalance(newPaymentBalance) {
-    setAppointment({
-      ...appointment,
-      paymentBalance: newPaymentBalance,
-    });
-  }
+  
 
   if (props.listView) {
     return (
@@ -128,7 +123,6 @@ export default function Appointment(props) {
         appointment={appointment}
         handleStatus={handleStatus}
         handleDelete={handleDelete}
-        updatePayment={updatePaymentBalance}
       />
     );
   }

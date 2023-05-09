@@ -20,25 +20,11 @@ router.route('/:appointmentId/notes')
 router.route('/:appointmentId/notes/:id')
   .delete(AppointmentCtrl.deleteNote)
 
-router.route('/:appointmentId/payments')
-  .get(AppointmentCtrl.getPayments)
-  .post(AppointmentCtrl.addPayment)
-
-router.route('/:appointmentId/payments/:id')
-  .delete(AppointmentCtrl.deletePayment)
-
 router.route('/:appointmentId/medications')
   .get(AppointmentCtrl.getMedications)
   .post(AppointmentCtrl.addMedication)
 
 router.route('/:appointmentId/medications/:id')
   .delete(AppointmentCtrl.deleteMedication)
-
-// router.route('/:appointmentId/labReports')
-//   .get(AppointmentCtrl.getReports)
-//   .post(AppointmentCtrl.addReport)
-
-// router.route('/:appointmentId/labReports/:id')
-//   .delete(AppointmentCtrl.deleteReport)
 
 export default router;

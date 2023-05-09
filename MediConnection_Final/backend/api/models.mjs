@@ -12,14 +12,13 @@ export class User {
       return {};
     }
 
-    const { username, firstName, lastName, isPhysician, profilePhotoId } =
+    const { username, firstName, lastName, isPhysician} =
       this.info;
     return {
       username: username,
       firstName: firstName,
       lastName: lastName,
       isPhysician: isPhysician,
-      profilePhotoId: profilePhotoId,
     };
   }
 
@@ -85,35 +84,7 @@ export class Session {
   }
 }
 
-export class Degree {
-  constructor(degreeInfo = {}) {
-    this.info = degreeInfo;
-  }
 
-  toJson() {
-    if (!this.info || (this.info && !Object.keys(this.info).length)) {
-      return {};
-    }
-
-    const { _id, ...otherInfo } = this.info;
-    return { id: _id, ...otherInfo };
-  }
-}
-
-export class Job {
-  constructor(jobInfo = {}) {
-    this.info = jobInfo;
-  }
-
-  toJson() {
-    if (!this.info || (this.info && !Object.keys(this.info).length)) {
-      return {};
-    }
-
-    const { _id, ...otherInfo } = this.info;
-    return { id: _id, ...otherInfo };
-  }
-}
 
 export class Service {
   constructor(serviceInfo = {}) {
@@ -130,35 +101,7 @@ export class Service {
   }
 }
 
-export class Insurance {
-  constructor(insuranceInfo = {}) {
-    this.info = insuranceInfo;
-  }
 
-  toJson() {
-    if (!this.info || (this.info && !Object.keys(this.info).length)) {
-      return {};
-    }
-
-    const { _id, ...otherInfo } = this.info;
-    return { id: _id, ...otherInfo };
-  }
-}
-
-export class Payment {
-  constructor(paymentInfo = {}) {
-    this.info = paymentInfo;
-  }
-
-  toJson() {
-    if (!this.info || (this.info && !Object.keys(this.info).length)) {
-      return {};
-    }
-
-    const { _id, ...otherInfo } = this.info;
-    return { id: _id, ...otherInfo };
-  }
-}
 
 // Models for appointmentApp
 export class Appointment {
@@ -215,20 +158,7 @@ export class Medication {
   }
 }
 
-export class LabReport {
-  constructor(labReportInfo = {}) {
-    this.info = labReportInfo;
-  }
 
-  toJson() {
-    if (!this.info || (this.info && !Object.keys(this.info).length)) {
-      return {};
-    }
-
-    const { _id, ...otherInfo } = this.info;
-    return { id: _id, ...otherInfo };
-  }
-}
 
 // Models for chatApp
 export class Chat {

@@ -2,21 +2,6 @@ import { ObjectId } from "mongodb";
 import noteSchema from "../schema/noteSchema.mjs";
 
 export default class NoteDAO {
-  // static notes
-
-  // static async injectDB(conn) {
-  //   if (noteSchema) {
-  //     return
-  //   }
-
-  //   try {
-  //     noteSchema = await conn.db(process.env.DB_NS).collection("notes", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in NoteDAO: ${err}`)
-  //   }
-  // }
 
   static async getNotes({
     filter = {},

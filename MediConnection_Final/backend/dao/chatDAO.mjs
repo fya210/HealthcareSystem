@@ -2,25 +2,7 @@ import { ObjectId } from "mongodb";
 import chatSchema from "../schema/chatSchema.mjs";
 
 export default class ChatDAO {
-  // static chats
-  // static messages
 
-  // static async injectDB(conn) {
-  //   if (chatSchema && this.messages) {
-  //     return
-  //   }
-
-  //   try {
-  //     chatSchema = await conn.db(process.env.DB_NS).collection("chats", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //     this.messages = await conn.db(process.env.DB_NS).collection("messages", {
-  //       writeConcern: { w: "majority" }
-  //     })
-  //   } catch (err) {
-  //     console.error(`Failed to connect to DB in ChatDAO: ${err}`)
-  //   }
-  // }
 
   static async getChats({ filter = {}, page = 0, limit = 10 } = {}) {
     try {
